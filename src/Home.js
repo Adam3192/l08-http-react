@@ -2,7 +2,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Container from 'react-bootstrap/Container'
 import Stack from 'react-bootstrap/Stack'
-import { Link, Outlet } from "react-router-dom"
+import { Link, Outlet } from 'react-router-dom'
 
 function Home() {
   return (
@@ -10,8 +10,15 @@ function Home() {
       <Navbar bg="dark" variant="dark">
         <Container>
           <Nav className="me-auto">
-            <Link to="/" className="nav-link">Home</Link>
-            <Link to="/contacts" className="nav-link">Contacts</Link>
+            <Link to="/" className="nav-link">
+              Home
+            </Link>
+            <Link to="/contacts" className="nav-link">
+              Contacts
+            </Link>
+            <Link to="/contacts/new" className="nav-link">
+              New Contact
+            </Link>
           </Nav>
         </Container>
       </Navbar>
@@ -23,4 +30,3 @@ function Home() {
 }
 
 export default Home
-
