@@ -1,6 +1,7 @@
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Spinner from 'react-bootstrap/Spinner'
+import Alert from 'react-bootstrap/Alert'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { ContactContext } from './ContactContext'
 import { useContext, useState, useEffect } from 'react'
@@ -11,6 +12,17 @@ function Contact(props) {
 
   let { getContact, deleteContact } = useContext(ContactContext)
   let [contact, setContact] = useState()
+  let [ error, setError ] = useState()
+
+  useEffect(() => {
+    setError(null)
+    async function fetch() {
+      await getContact(params.contactId)
+        .then((contact) => setContact(contact))
+        .catch((message) => setError(message))
+    }
+    fetch()
+  }, [params.contactId, getContact])
 
   useEffect(() => {
     async function fetch() {
@@ -30,6 +42,10 @@ function Contact(props) {
         <Spinner animation="border" />
       </div>
     )
+  }
+
+  function errorMessage() {
+    return <Alert variant="danger">There was an error attempting to load this contact: {error}</Alert>
   }
 
   function contactCard() {
@@ -55,6 +71,7 @@ function Contact(props) {
       </Card>
     )
   }
+  if (error) return errorMessage()
   if (contact === undefined) return loading()
   return contact.id !== parseInt(params.contactId) ? loading() : contactCard()
 }

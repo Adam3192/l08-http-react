@@ -25,12 +25,15 @@ export const ContactProvider = (props) => {
       .then(response =>
         new Promise((resolve) => resolve(response.data))
       )
-  }
-
+      .catch((error) =>
+        new Promise((_, reject) => reject(error.response.statusText))
+      )
+    }
+    
   function deleteContact(id) {
    axios.delete(`http://localhost:3001/contacts/${id}`)
      .then(refreshContacts)
- }
+  }
 
  function addContact(contact) {
   return axios.post("http://localhost:3001/contacts", contact)
